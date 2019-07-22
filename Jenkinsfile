@@ -1,20 +1,25 @@
-node {
-   def mvnHome = tool name: 'maven', type: 'maven'
-   stage('Clone')
-   { 
-   git 'https://github.com/Bhavyasreethakur/MavenProject.git'
-   }
-   stage('clean')
-   {
-   
-   sh "${mvnHome}/bin/mvn clean"
-   }
-   stage('test')
-   {
-      sh "${mvnHome}/bin/mvn test"
-   }
-    stage('Deploy')
-   {
-      sh "${mvnHome}/bin/mvn package"
-   }
-   }
+pipeline {
+    agent any 
+    environment {
+        mvn_Home = tool name: 'maven', type: 'maven'
+    }
+ stages {
+        stage('Clone') { 	
+            steps {
+                sh "rm -rf MavenProject"
+                sh "git clone https://github.com/Bhavyasreethakur/MavenProject.git"
+                sh "${mvn_Home}/bin/mvn clean"
+            }
+        }
+        stage('Test') {
+            steps {
+               sh "${mvn_Home}/bin/mvn test" 
+            }
+        }
+        stage('Deploy'){
+            steps{
+              sh "${mvn_Home}/bin/mvn package"  
+            }
+        }
+    } }
+
