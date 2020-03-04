@@ -23,7 +23,9 @@ pipeline {
         }
      stage('email Notification')
      {
+         steps{
          mail bcc: '', body: 'Welcome to Jenkins', cc: '', from: '', replyTo: '', subject: 'job notification', to: 'bhavyasreethakur21@gmail.com'
-     }
+         }
+         }
     } }
 
