@@ -21,6 +21,13 @@ pipeline {
               sh "${mvn_Home}/bin/mvn package"  
             }
         }
+     stage('SonarQube Analysis'){
+         steps{
+             withSonarQubeEnv('sonarqube-server'){
+                 sh "${mvn_Home}/bin/mvn sonar:sonar"
+             }
+         }
+     }
      stage('email Notification')
      {
          steps{
